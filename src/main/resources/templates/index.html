@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:replace="common/layout :: head"></head>
+<body>
+<nav th:replace="common/layout :: nav"></nav>
+    <div class="container" >
+        <div class="jumbotron">
+            <img src="http://placehold.it/980x300/5fcf80/ffffff" alt="logo"/>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A autem ex exercitationem perspiciatis quam, recusandae sit.Asperiores aspernatur atque eaque illo iste, magni minus natus nulla quam sit voluptate voluptates.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 login">
+                <a href="#" class="btn btn-info btn-lg" >Apply Online</a>
+                <p>Click to begin the online application</p>
+            </div>
+
+            <div class="col-md-4">
+                <a href="#" class="btn btn-primary btn-lg">Login</a>
+                <p>Click to continue your application or view admissions status</p>
+            </div>
+
+            <div class="col-md-4 announcements">
+                <h4>Announcements</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus cupiditate dignissimos enim est ipsa neque nulla obcaecati tempora! Deleniti dignissimos doloribus eligendi enim esse ex libero, maiores necessitatibus odit veritatis?</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="#" >Brochure Certificate </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" >Brochure Diploma</a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" >Brochure Advanced Diploma</a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" >Brochure Bachelor programs</a>
+                </div>
+            </div>
+        </div>
+        <p class="footer">&copy; 2017 Ministry of Health  - Human Resource Department </p>
+    </div>
+    <div th:replace="common/layout :: scripts"></div>
+</body>
+</html>
+
