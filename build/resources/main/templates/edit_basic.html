@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head th:fragment="head" lang="en">
+    <meta charset="UTF-8"/>
+    <meta description="viewport" content="width=device-width, initial-scale=1"/>
+    <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet"
+          th:href="@{https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css}"/>
+    <link rel="stylesheet"
+          th:href="@{https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/app.css}"/>
+    <title th:text="'giflib | ' + ${page_title}">giflib</title>
+</head>
+<body>
+<div class="container">
+<form  method="post" th:object="${certificate}"
+      th:action="@{${action1}}" class="form-inline inline new-item editCert">
+    <input type="hidden" th:field="*{id}"/>
+    <div th:replace="common/layout :: flash"></div>
+    <div class="flash"></div>
+    <fieldset>
+        <legend th:text="${heading}"> Personal Information</legend>
+        <div class="row" th:classappend="${#fields.hasErrors('fullName')}? 'error' : ''">
+            <input type="text" class="form-control input-sm" th:field="*{fullName}"
+                   placeholder="Full Name example Jane Doe"/>
+            <div class="error-message" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
+        </div>
+
+        <div class="row" th:classappend="${#fields.hasErrors('gender')}? 'error' : ''">
+            <select th:field="*{gender}" class="form-control input-lg ">
+                <option value="">[Select Gender]</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            <div class="error-message" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div>
+        </div>
+        <div class="row" th:classappend="${#fields.hasErrors('date')}? 'error' : ''">
+            <input th:type="date" data-value="20/04/2015" class="form-control input-sm datepicker" th:field="*{date}"
+                   placeholder="Date Of Birth"/>
+            <div class="error-message" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
+        </div>
+
+        <div class="row" th:classappend="${#fields.hasErrors('Nationality')}? 'error' : ''">
+            <input type="text" class="form-control input-sm autocomplete" th:field="*{Nationality}"
+                   placeholder="Nationality"/>
+            <div class="error-message" th:if="${#fields.hasErrors('Nationality')}" th:errors="*{Nationality}"></div>
+        </div>
+        <div class="row" th:classappend="${#fields.hasErrors('email')}? 'error' : ''">
+            <input type="text" class="form-control input-sm" th:field="*{email}"
+                   placeholder="Email example jane.doe@example.com"/>
+            <div class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        </div>
+        <div class="row" th:classappend="${#fields.hasErrors('married')}? 'error' : ''">
+            <select th:field="*{married}" class="form-control input-lg">
+                <option value="">[Select Martial Status]</option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+            </select>
+            <div class="error-message" th:if="${#fields.hasErrors('married')}" th:errors="*{married}"></div>
+        </div>
+        <div class="row" th:classappend="${#fields.hasErrors('postalAddress')}? 'error' : ''">
+            <input type="text" class="form-control input-sm" th:field="*{postalAddress}"
+                   placeholder="Postal Address"/>
+            <div class="error-message" th:if="${#fields.hasErrors('postalAddress')}"
+                 th:errors="*{postalAddress}"></div>
+        </div>
+        <div class="row" th:classappend="${#fields.hasErrors('postalAddress')}? 'error' : ''">
+            <input type="text" class="form-control input-sm" th:field="*{homeTown}" placeholder="Home Town"/>
+            <div class="error-message" th:if="${#fields.hasErrors('postalAddress')}"
+                 th:errors="*{postalAddress}"></div>
+        </div>
+        <div class="row" th:classappend="${#fields.hasErrors('region')}? 'error' : ''">
+            <select th:field="*{region}" class="form-control input-lg">
+                <option value="">[Select Region of Birth]</option>
+                <option th:each="region : ${regions}" th:value="${region.values}" th:text="${region.name}">
+                </option>
+            </select>
+            <div class="error-message" th:if="${#fields.hasErrors('region')}" th:errors="*{region}"></div>
+        </div>
+        <div class="row" th:classappend="${#fields.hasErrors('telephoneNumber')}? 'error' : ''">
+            <input type="text" class="form-control input-sm" th:field="*{telephoneNumber}"
+                   placeholder="Telephone Number"/>
+            <div class="error-message" th:if="${#fields.hasErrors('telephoneNumber')}"
+                 th:errors="*{telephoneNumber}"></div>
+        </div>
+        <div class="row" th:classappend="${#fields.hasErrors('language')}? 'error' : ''">
+            <input type="text" class="form-control input-sm" th:field="*{language}" placeholder="Language"/>
+            <div class="error-message" th:if="${#fields.hasErrors('language')}" th:errors="*{language}"></div>
+        </div>
+        <div class="row">
+            <input type="text" class="form-control input-sm" th:field="*{guardianFullName}"
+                   placeholder="Guardian FullName"/>
+        </div>
+        <div class="row">
+            <input type="text" class="form-control input-sm" th:field="*{guardianTelephoneNumber}"
+                   placeholder="Guardian Telephone Number"/>
+        </div>
+        <div th:classappend="${#fields.hasErrors('courseOffered')}? 'error' : ''">
+            <input type="text" th:field="*{courseOffered}" placeholder="CourseOffered"/>
+            <div class="error-message" th:if="${#fields.hasErrors('courseOffered')}"
+                 th:errors="*{courseOffered}"></div>
+        </div>
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary" th:text="${submit}">Add</button>
+            <a th:if="${submit == 'Update'}" th:href="@{/cert_prog}" class="btn btn-primary">Cancel</a>
+        </div>
+    </fieldset>
+    <div class="style16"></div>
+</form>
+<div th:fragment="flash" th:if="${flash != null}" class="container">
+    <div class="message">
+        <i class="right material-icons" data-close="">close</i>
+        <div th:classappend="${#strings.toLowerCase(flash.status)}" th:text="${flash.message}" class="flash"></div>
+    </div>
+</div>
+<div th:fragment="scripts">
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" th:src="@{/assets/js/app.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/cert.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/imageloader.js}"></script>
+</div>
+<div class="footer" th:fragement="footer"></div>
+</div>
+</body>
+</html>

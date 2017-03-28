@@ -17,6 +17,8 @@ public class Picture {
     @Lob
     private byte[] bytes;
 
+    private String uploadfile;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -29,14 +31,6 @@ public class Picture {
         this.id = id;
     }
 
-   /* public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-*/
     public byte[] getBytes() {
         return bytes;
     }
@@ -51,5 +45,13 @@ public class Picture {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getUploadfile() {
+        return uploadfile;
+    }
+
+    public void setUploadfile(String uploadfile) {
+        this.uploadfile = uploadfile;
     }
 }

@@ -31,8 +31,8 @@ public class PictureServiceImpl implements PictureService {
     @Override
     public void save(Picture picture, MultipartFile file) {
         try {
-            //picture.setFileName(file.getOriginalFilename());
             picture.setBytes(file.getBytes());
+            picture.setUploadfile(file.getName());
             pictureDao.save(picture);
         } catch (IOException e) {
             System.err.println("Unable to get byte array from Uploaded file");
@@ -43,4 +43,5 @@ public class PictureServiceImpl implements PictureService {
     public void delete(Picture picture) {
         pictureDao.delete(picture);
     }
+
 }

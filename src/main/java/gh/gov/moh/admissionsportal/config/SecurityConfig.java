@@ -1,5 +1,6 @@
 package gh.gov.moh.admissionsportal.config;
 
+import gh.gov.moh.admissionsportal.service.LoggerService;
 import gh.gov.moh.admissionsportal.service.UserService;
 import gh.gov.moh.admissionsportal.web.controller.FlashMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-
-import javax.servlet.http.HttpSession;
 
 
 /**
@@ -34,8 +35,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserService userService;
 
     @Autowired
+    private LoggerService loggerService;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(userService);
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder(10);
     }
 
     @Override
@@ -58,20 +67,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .logout()
                 .permitAll()
-                .logoutSuccessUrl("/login").deleteCookies("JSESSIONID").logoutSuccessUrl("/");
+                .logoutSuccessUrl("/login")
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/")
+                .and()
+                .authorizeRequests()
+                .antMatchers("/certcutoff").permitAll()
+                .and()
+                .csrf().disable();
     }
 
     public AuthenticationSuccessHandler loginSuccessHandler() {
         //return (request, response, authentication) -> response.sendRedirect("/");
         return (request, response, authentication)-> {
-            HttpSession session = request.getSession(false);
-            if(session != null){
-                request.setAttribute("program","program");
-                if(request.getAttribute("program") == "Certificate-program") {
-                    response.sendRedirect("/cert-prog");
-                }
-            }
-            response.sendRedirect("/");
+            if(loggerService.findAll().size()!=0)
+            response.sendRedirect(loggerService.findRequest());
+            else
+                response.sendRedirect("/cert_prog");
         };
     }
 
@@ -98,4 +110,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             }
         };
     }
+
 }
+
+/*HttpSession session = request.getSession(false);
+    if(session != null){
+        request.setAttribute("program","program");
+        if(request.getAttribute("program") == "Certificate-program") {
+            response.sendRedirect("/cert-prog");
+        }
+            }*/

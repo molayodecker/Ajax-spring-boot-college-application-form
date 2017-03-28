@@ -10,7 +10,11 @@ import java.util.List;
  */
 public interface PictureService {
     List<Picture> findAll();
+
     Picture findById(Long id);
+
     void save(Picture picture, MultipartFile file);
+
     void delete(Picture picture);
+
 }

@@ -18,6 +18,4 @@ public class CertificateController {
     private CertificateService certificateService;
 
 
-
-
 }

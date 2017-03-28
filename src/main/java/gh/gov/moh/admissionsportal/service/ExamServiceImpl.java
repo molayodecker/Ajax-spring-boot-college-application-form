@@ -5,6 +5,8 @@ import gh.gov.moh.admissionsportal.model.Exams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by molayodecker on 28/01/2017.
  */
@@ -15,7 +17,7 @@ public class ExamServiceImpl implements ExamService {
     private ExamsDao examsDao;
 
     @Override
-    public Iterable<Exams> findAll() {
+    public List<Exams> findAll() {
         return examsDao.findAll();
     }
 

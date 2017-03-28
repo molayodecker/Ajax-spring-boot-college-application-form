@@ -5,17 +5,19 @@ import gh.gov.moh.admissionsportal.model.School;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by molayodecker on 07/02/2017.
  */
 @Service
-public class SchoolServiceImpl implements SchoolService{
+public class SchoolServiceImpl implements SchoolService {
     @Autowired
     private SchoolDao schoolDao;
 
     @Override
-    public Iterable<School> findAll() {
-       return schoolDao.findAll();
+    public List<School> findAll() {
+        return schoolDao.findAll();
     }
 
     @Override
@@ -25,6 +27,6 @@ public class SchoolServiceImpl implements SchoolService{
 
     @Override
     public School save(School school) {
-       return schoolDao.save(school);
+        return schoolDao.save(school);
     }
 }

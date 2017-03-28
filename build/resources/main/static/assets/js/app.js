@@ -2,12 +2,12 @@
 var $overlay = $('<div class="overlay"></div>');
 var $close   = $('<div class="close-classic"></div>');
 //Add overlay to body
-$("body").append($overlay).append($close);
+$("body").append($overlay);
 
-$(".login a").click(function(event){
+$(".login").on('click',function(event){
   event.preventDefault();
    $overlay.load('login');
-   $overlay.show();
+   $overlay.show().append($close);
    $close.show();
 });
 
@@ -35,8 +35,11 @@ $('.todo-item label').click(function(){
  });
 
 $('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15 // Creates a dropdown of 15 years to control year
+    autoclose: true,
+    format: 'dd/mm/yyyy',
+    formatSubmit: 'dd/mm/yyyy',
+     hiddenPrefix: 'prefix__',
+     hiddenSuffix: '__suffix'
   });
 
 
@@ -44,43 +47,36 @@ let availableTags = [
   "Ghanaian",
   "Nigerian"
 ];
+var $autoform = $('.autocomplete');
 
-$('.autocomplete').autocomplete({
+$autoform.addClass('.failure');
+$autoform.autocomplete({
   source: availableTags
 });
 
-$('#certificate').change(function() {
-  $('#program option').hide();
-  $('#program option[class="' + $(this).val() + '"]').show();
-  // add this code to select 1'st of streets automaticaly
-  // when city changed
-  if ($('#program option[class="' + $(this).val() + '"]').length) {
-    $('#program option[class="' + $(this).val() + '"]').first().prop('selected', true);
+$("#certificate").change(function() {
+  if ($(this).data('options') == undefined) {
+    $(this).data('options', $('#program option').clone());
+    $("#program").next('select').val("disabled", "true");
   }
-  // in case if there's no corresponding street:
-  // reset select element
-  else {
-    $('#program').val('');
-  };
+  var id = $(this).val();
+  var options = $(this).data('options').filter('[class=' + id + ']');
+  $('#program').html(options).show();
 });
 
-$('#program').change(function() {
-  $('#school option').val('');
-  $('#school option').hide();
-  $('#school option[class="' + $(this).val() + '"]').show();
-  // add this code to select 1'st of streets automaticaly
-  // when city changed
-  if ($('#school option[class="' + $(this).val() + '"]').length) {
-    $('#school option[class="' + $(this).val() + '"]').first().prop('selected', true);
+$("#program").change(function() {
+  if ($(this).data('options') == undefined) {
+    $(this).data('options', $('#school option').clone());
+
   }
-  // in case if there's no corresponding street:
-  // reset select element
-  else {
-    $('#school').val('');
-  };
+  var id = $(this).val();
+  var options = $(this).data('options').filter('[class=' + id + ']');
+  $('#school').html(options).show();
 });
 
-
+$('#selectEl').change(function() {
+  window.location = $(this).val();
+});
 
 
 var $password = $(".showpassword");
@@ -96,5 +92,37 @@ $(".toggle").click(function () {
     $password.attr("type", "text");
   }
 });
+/*  var formData = new FormData();
+    var file = $("#upload-file-input input[type='file']").val();
+    formData.append('uploadfile', file);*/
+
+
+
+//var $form = $('#cert_id').attr('action');
+var $form = $('a.overlayedit').prop('href');
+var $overlay1 = $('<div class="second_overlay"></div>');
+var $close1   = $('<div class="close-classic"></div>');
+var certificate ='${certificateProgrammes.id}';
+//Add overlay to body
+$("body").append($overlay1).append($close1);
+$(".overlayedit").on('click',function(event){
+  event.preventDefault();
+   $overlay1.load($form);
+   $('.second_overlay').show();
+   $close1.show();
+   $('.blurout').addClass('blur');
+});
+
+$close1.on('click',function() {
+        $overlay1.hide();
+ });
+
+$close1.on('click',function() {
+        $(this).hide();
+        $('.second_overlay').hide();
+        $('.blurout').removeClass('blur');
+ });
+
+
 
 

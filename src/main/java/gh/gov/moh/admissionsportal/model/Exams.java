@@ -15,9 +15,7 @@ public class Exams {
     private Long id;
 
     @NotNull(message = "The above field must not be blank.")
-    private String courseOffered;
-
-    @NotNull(message = "The above field must not be blank.")
+    @Size(min = 2, max = 25)
     private String examType;
 
     @NotNull(message = "The above field must not be blank.")
@@ -25,6 +23,7 @@ public class Exams {
     private String subject;
 
     @NotNull(message = "The above field must not be blank.")
+    @Size(min = 2, max = 25)
     private String grade;
 
     @NotNull(message = "The above field must not be blank.")
@@ -57,20 +56,12 @@ public class Exams {
         this.id = id;
     }
 
-    public String getCourseOffered() {
-        return courseOffered;
-    }
-
-    public void setCourseOffered(String courseOffered) {
-        this.courseOffered = courseOffered;
-    }
-
     public String getExamType() {
         return examType;
     }
 
     public void setExamType(String examType) {
-        this.examType = examType;
+        this.examType = "WASSCE";
     }
 
     public String getSubject() {
