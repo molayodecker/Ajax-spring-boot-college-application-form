@@ -2,11 +2,7 @@
 > **This project requires JVM version of at least 1.7**
 
 > 
-This web application allows you to add forms and edit or delete forms
-
-This web application is well suited for an Institution which is trying to admit students into
-college. It gives the applicant the ability to add forms, edit and delete form.
-The use of REST API and Jquery makes the application fluid.
+This web application is well suited for an Institution 
 
 #Install
 This application was build with Bootstrap and Jquery and Thymeleaf. All plugins have already been installed
