@@ -11,7 +11,7 @@ import java.util.List;
  * Created by molayodecker on 28/01/2017.
  */
 @Repository
-public interface ExamsDao extends CrudRepository<Exams,Long>{
+public interface ExamsDao extends CrudRepository<Exams, Long> {
     @Query("select e from Exams e join e.user u where u.id= ?#{principal.id}")
     List<Exams> findAll();
 }

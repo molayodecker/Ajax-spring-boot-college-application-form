@@ -26,7 +26,7 @@ public class DiplomaProgramme {
     private String courseOffered;
     private String ExamType;
     private String Subject;
-    private String  Grade;
+    private String Grade;
     private Long indexNumber;
     private String programChoice;
     private String schoolChoice;

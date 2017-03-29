@@ -4,11 +4,15 @@ package gh.gov.moh.admissionsportal.web;
  * Created by molayodecker on 06/02/2017.
  */
 public enum Region {
-    UPPEREAST("Upper East","Upper East"),
-    UPPERWEST("Upper West","Upper West"),
-    NORTHERNREGION("Northern Region","Northern Region"),
-    BRONGAHAFO("Brong Ahafo","Brong Ahafo"),
-    WESTERNREGION("Western Region","Western Region");
+    UPPEREAST("Upper East", "Upper East"),
+    UPPERWEST("Upper West", "Upper West"),
+    NORTHERNREGION("Northern Region", "Northern Region"),
+    BRONGAHAFO("Brong Ahafo", "Brong Ahafo"),
+    WESTERNREGION("Western Region", "Western Region"),
+    GREATERACCRAREGION("Greater Accra Region", "Greater Accra Region"),
+    CENTRALREGION("Central Region", "Central Region"),
+    EASTREGION("Eastern Region", "Eastern Region"),
+    VOLTAREGION("Volta Region", "Volta Region");
 
     private String name;
     private String values;

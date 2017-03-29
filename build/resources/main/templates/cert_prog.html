@@ -1,42 +1,104 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns="http://www.w3.org/1999/html">
 <head th:replace="common/layout :: head"></head>
-<body>
 <nav th:replace="common/layout :: nav"></nav>
 <div class="container">
-    <form th:action="@{/pictures}" method="post" th:object="${picture}" enctype="multipart/form-data" class="form-inline inline new-item">
+    <div class="blurout">
+
+    <form  id="upload-file-input" th:action="@{/uploadFile}" method="post" th:object="${picture}"
+          enctype="multipart/form-data" class="form-inline inline new-item">
         <div th:replace="common/layout :: flash"></div>
+
         <fieldset>
             <legend> Upload Picture</legend>
-        <div class="row">
-            <div class="col s12 l8">
-                <div class="file-wrapper">
-                    <input type="file" id="file" name="file"/>
-                    <span class="placeholder" data-placeholder="Choose an image...">Choose an image...</span>
-                    <label for="file" class="button">Browse</label>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Upload</button>
-        </div>
+            <label class="btn btn-default btn-file">
+                Browse
+                <input type="file" id="file" name="uploadfile" onchange="$('#custom-file-control').html($(this).val());"/>
+                <span id="custom-file-control"></span>
+            </label>
+            <br/><br/>
+            <span id="upload-file-message"></span>
+            <button type="submit" class="btn btn-primary" th:text="${submit}">Upload Picture</button>
         </fieldset>
+        <div class="style16"></div>
     </form>
-    <div class="style16"></div>
-    <table th:each="cert : ${certificateProgrammes}" class="table table-striped">
-        <tr>
-            <td>Full Name :</td>
-            <td th:text="${cert.fullName}">Text ...</td>
-        </tr>
-    </table>
-    <form th:if="${certificateProgrammes.size() lt 1}" method="post" th:object="${certificate}" th:action="@{/basic}" class="form-inline inline new-item">
+
+
+    <div th:if="${certificateProgrammes.size() eq 1}" th:each="cert : ${certificateProgrammes}">
+        <!--<form id="cert_id" th:action="@{|/cert_prog/${cert.id}|}" method="post" th:object="${flag}">
+            <button type="submit" id="cert" class="btn btn-primary pull-right ">Edit</button>-->
+            <a th:href="@{|/cert_prog/${cert.id}/edit|}" class="waves-effect waves-light btn overlayedit">Edit</a>
+            <table class="table table-striped new-font">
+                <tr>
+                    <td>Full Name :</td>
+                    <td th:text="${cert.fullName}">Text ...</td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    <td th:text="${cert.gender}">Text ...</td>
+                </tr>
+                <tr>
+                    <td>Date</td>
+                    <td th:text="${cert.date}">Text ...</td>
+                </tr>
+                <tr>
+                    <td>Nationality</td>
+                    <td th:text="${cert.nationality}">Text ...</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td th:text="${cert.email}">Text ...</td>
+                </tr>
+                <tr>
+                    <td>Martial Status</td>
+                    <td th:text="${cert.married}">Text ...</td>
+                </tr>
+                <tr>
+                    <td>Postal Address</td>
+                    <td th:text="${cert.postalAddress}">Text ...</td>
+                </tr>
+                <tr>
+                    <td>Home Town</td>
+                    <td th:text="${cert.homeTown}">Text ...</td>
+                </tr>
+                <tr>
+                    <td>Region</td>
+                    <td th:text="${cert.region}">Text ...</td>
+                </tr>
+                <tr>
+                    <td>Telephone Numbers</td>
+                    <td th:text="${cert.telephoneNumber}">Text ...</td>
+                </tr>
+                <tr>
+                    <td>Language</td>
+                    <td th:text="${cert.language}">Text ...</td>
+                </tr>
+                <tr>
+                    <td>Guardian FullName</td>
+                    <td th:text="${cert.guardianFullName}">Text ...</td>
+                </tr>
+                <tr>
+                    <td>Guardian Telephone Number</td>
+                    <td th:text="${cert.guardianTelephoneNumber}">Text ...</td>
+                </tr>
+            </table>
+            <div class="style16"></div>
+        <!--</form>-->
+    </div>
+    <!--if flag is set to true, show the Personal info form else do not show-->
+    <form th:if="${retrieveData ==null }" method="post" th:object="${certificate}"
+          th:action="@{${action1}}" class="form-inline inline new-item">
+        <input type="hidden" th:field="*{id}"/>
         <div th:replace="common/layout :: flash"></div>
         <fieldset>
-            <legend> Personal Information</legend>
-            <div class="row" th:classappend="${#fields.hasErrors('fullName')}? 'error' : ''" >
-                <input type="text" class="form-control input-sm" th:field="*{fullName}" placeholder="Full Name example Jane Doe"/>
+            <legend th:text="${heading}"> Personal Information</legend>
+            <div class="row" th:classappend="${#fields.hasErrors('fullName')}? 'error' : ''">
+                <input type="text" class="form-control input-sm" th:field="*{fullName}"
+                       placeholder="Full Name example Jane Doe"/>
                 <div class="error-message" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
             </div>
 
-            <div class="row" th:classappend="${#fields.hasErrors('gender')}? 'error' : ''" >
+            <div class="row" th:classappend="${#fields.hasErrors('gender')}? 'error' : ''">
                 <select th:field="*{gender}" class="form-control input-lg ">
                     <option value="">[Select Gender]</option>
                     <option value="Male">Male</option>
@@ -44,23 +106,23 @@
                 </select>
                 <div class="error-message" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div>
             </div>
-            <div class="row" th:classappend="${#fields.hasErrors('date')}? 'error' : ''" >
-                <input type="date" class="form-control input-sm datepicker" th:field="*{date}"
+            <div class="row" th:classappend="${#fields.hasErrors('date')}? 'error' : ''">
+                <input th:type="date" data-value="20/04/2015" class="form-control input-sm datepicker" th:field="*{date}"
                        placeholder="Date Of Birth"/>
-                <div class="error-message" th:if="${#fields.hasErrors('gender')}" th:errors="*{date}"></div>
+                <div class="error-message" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
             </div>
 
-            <div class="row" th:classappend="${#fields.hasErrors('Nationality')}? 'error' : ''" >
+            <div class="row" th:classappend="${#fields.hasErrors('Nationality')}? 'error' : ''">
                 <input type="text" class="form-control input-sm autocomplete" th:field="*{Nationality}"
                        placeholder="Nationality"/>
                 <div class="error-message" th:if="${#fields.hasErrors('Nationality')}" th:errors="*{Nationality}"></div>
             </div>
-            <div class="row" th:classappend="${#fields.hasErrors('email')}? 'error' : ''" >
+            <div class="row" th:classappend="${#fields.hasErrors('email')}? 'error' : ''">
                 <input type="text" class="form-control input-sm" th:field="*{email}"
                        placeholder="Email example jane.doe@example.com"/>
                 <div class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
             </div>
-            <div class="row" th:classappend="${#fields.hasErrors('married')}? 'error' : ''" >
+            <div class="row" th:classappend="${#fields.hasErrors('married')}? 'error' : ''">
                 <select th:field="*{married}" class="form-control input-lg">
                     <option value="">[Select Martial Status]</option>
                     <option value="Single">Single</option>
@@ -68,16 +130,18 @@
                 </select>
                 <div class="error-message" th:if="${#fields.hasErrors('married')}" th:errors="*{married}"></div>
             </div>
-            <div class="row" th:classappend="${#fields.hasErrors('postalAddress')}? 'error' : ''" >
+            <div class="row" th:classappend="${#fields.hasErrors('postalAddress')}? 'error' : ''">
                 <input type="text" class="form-control input-sm" th:field="*{postalAddress}"
                        placeholder="Postal Address"/>
-                <div class="error-message" th:if="${#fields.hasErrors('postalAddress')}" th:errors="*{postalAddress}"></div>
+                <div class="error-message" th:if="${#fields.hasErrors('postalAddress')}"
+                     th:errors="*{postalAddress}"></div>
             </div>
-            <div class="row" th:classappend="${#fields.hasErrors('postalAddress')}? 'error' : ''" >
+            <div class="row" th:classappend="${#fields.hasErrors('postalAddress')}? 'error' : ''">
                 <input type="text" class="form-control input-sm" th:field="*{homeTown}" placeholder="Home Town"/>
-                <div class="error-message" th:if="${#fields.hasErrors('postalAddress')}" th:errors="*{postalAddress}"></div>
+                <div class="error-message" th:if="${#fields.hasErrors('postalAddress')}"
+                     th:errors="*{postalAddress}"></div>
             </div>
-            <div class="row" th:classappend="${#fields.hasErrors('region')}? 'error' : ''" >
+            <div class="row" th:classappend="${#fields.hasErrors('region')}? 'error' : ''">
                 <select th:field="*{region}" class="form-control input-lg">
                     <option value="">[Select Region of Birth]</option>
                     <option th:each="region : ${regions}" th:value="${region.values}" th:text="${region.name}">
@@ -85,12 +149,13 @@
                 </select>
                 <div class="error-message" th:if="${#fields.hasErrors('region')}" th:errors="*{region}"></div>
             </div>
-            <div class="row" th:classappend="${#fields.hasErrors('telephoneNumber')}? 'error' : ''" >
+            <div class="row" th:classappend="${#fields.hasErrors('telephoneNumber')}? 'error' : ''">
                 <input type="text" class="form-control input-sm" th:field="*{telephoneNumber}"
                        placeholder="Telephone Number"/>
-                <div class="error-message" th:if="${#fields.hasErrors('telephoneNumber')}" th:errors="*{telephoneNumber}"></div>
+                <div class="error-message" th:if="${#fields.hasErrors('telephoneNumber')}"
+                     th:errors="*{telephoneNumber}"></div>
             </div>
-            <div class="row" th:classappend="${#fields.hasErrors('language')}? 'error' : ''" >
+            <div class="row" th:classappend="${#fields.hasErrors('language')}? 'error' : ''">
                 <input type="text" class="form-control input-sm" th:field="*{language}" placeholder="Language"/>
                 <div class="error-message" th:if="${#fields.hasErrors('language')}" th:errors="*{language}"></div>
             </div>
@@ -102,13 +167,19 @@
                 <input type="text" class="form-control input-sm" th:field="*{guardianTelephoneNumber}"
                        placeholder="Guardian Telephone Number"/>
             </div>
+            <div th:classappend="${#fields.hasErrors('courseOffered')}? 'error' : ''">
+                <input type="text" th:field="*{courseOffered}" placeholder="CourseOffered"/>
+                <div class="error-message" th:if="${#fields.hasErrors('courseOffered')}"
+                     th:errors="*{courseOffered}"></div>
+            </div>
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="submit" class="btn btn-primary" th:text="${submit}">Add</button>
+                <a th:if="${submit == 'Update'}" th:href="@{/cert_prog}" class="btn btn-primary">Cancel</a>
             </div>
         </fieldset>
+        <div class="style16"></div>
     </form>
-    <div class="style16"></div>
-    <table class="table table-striped inlines new-items">
+    <table class="table table-striped inlines new-items ">
         <thead>
         <tr>
             <th>Index Number</th>
@@ -117,61 +188,81 @@
             <th>Exams Type</th>
             <th>Subject</th>
             <th>Exams Year</th>
+            <th>Edit</th>
         </tr>
         </thead>
         <tbody th:each="exam : ${exams}">
         <tr>
             <td><label th:for="|checked_${exam.id}|" th:text="${exam.indexNumber}"></label></td>
             <td><label th:for="|checked_${exam.id}|" th:text="${exam.grade}"></label></td>
-            <td><label th:for="|checked_${exam.id}|" th:text="${exam.courseOffered}"></label></td>
+            <td><label th:if="${retrieveData != null}" th:text="${retrieveData.courseOffered}"></label></td>
             <td><label th:for="|checked_${exam.id}|" th:text="${exam.examType}"></label></td>
             <td><label th:for="|checked_${exam.id}|" th:text="${exam.subject}"></label></td>
             <td><label th:for="|checked_${exam.id}|" th:text="${exam.gradeYear}"></label></td>
+            <td><a th:href="@{|/cert_prog/${exam.id}/editexams|}" class="waves-effect waves-light btn">Edit</a></td>
         </tr>
         </tbody>
     </table>
 
+
+    <legend th:if="${exams.size() lt 6}" th:text="${weacheading}"> Education Information</legend>
     <fieldset>
-        <legend> Education Information</legend>
-        <div class="form-group" th:if="${exams.size() lt 6}">
-            <form method="post" th:object="${newExam}" th:action="@{/exams}" class="inline new-item">
+        <div class="form-group" >
+            <form method="post" th:object="${newExam}" th:action="@{${action2}}" class="inline new-item">
+                <div th:replace="common/layout :: flash"></div>
                 <div th:classappend="${#fields.hasErrors('indexNumber')}? 'error' : ''">
                     <input type="text" th:field="*{indexNumber}" placeholder="Index Number"/>
-                <div class="error-message" th:if="${#fields.hasErrors('indexNumber')}" th:errors="*{indexNumber}"></div>
+                    <div class="error-message" th:if="${#fields.hasErrors('indexNumber')}"
+                         th:errors="*{indexNumber}"></div>
                 </div>
                 <div th:classappend="${#fields.hasErrors('grade')}? 'error' : ''">
-                    <select th:field="*{grade}" class="form-control input-lg">
-                    <option value="">[Select Grade]</option>
-                    <option th:each="grade : ${grades}" th:value="${grade.values}" th:text="${grade.name}">Grade
-                    </option>
-                </select>
-                <div class="error-message" th:if="${#fields.hasErrors('grade')}" th:errors="*{grade}"></div>
-                </div>
-                <div th:classappend="${#fields.hasErrors('courseOffered')}? 'error' : ''">
-                    <input type="text" th:field="*{courseOffered}" placeholder="CourseOffered"/>
-                    <div class="error-message" th:if="${#fields.hasErrors('courseOffered')}" th:errors="*{courseOffered}"></div>
+                    <select th:field="*{grade}" class="form-control input-lg gradept">
+                        <option value="">[Select Grade]</option>
+                        <option  th:each="grade : ${grades}" th:value="${grade.values}" th:text="${grade.name}">Grade
+                        </option>
+                    </select>
+                    <div class="error-message" th:if="${#fields.hasErrors('grade')}" th:errors="*{grade}"></div>
                 </div>
                 <div th:classappend="${#fields.hasErrors('examType')}? 'error' : ''">
-                    <input type="text" th:field="*{examType}" placeholder="ExamType"/>
+                    <input type="text" th:field="*{examType}" placeholder="ExamType" th:value="WASSCE"/>
                     <div class="error-message" th:if="${#fields.hasErrors('examType')}" th:errors="*{examType}"></div>
                 </div>
                 <div th:classappend="${#fields.hasErrors('subject')}? 'error' : ''">
                     <input type="text" th:field="*{subject}" placeholder="Subject"/>
-                <div class="error-message" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></div>
+                    <div class="error-message" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></div>
                 </div>
                 <div th:classappend="${#fields.hasErrors('gradeYear')}?'error' : ''">
-                    <input type="text" th:field="*{gradeYear}" placeholder="ExamYear"/>
-                <div class="error-message" th:if="${#fields.hasErrors('gradeYear')}" th:errors="*{gradeYear}"></div>
+                    <input  type="text" th:field="*{gradeYear}" placeholder="ExamYear"/>
+                    <div class="error-message" th:if="${#fields.hasErrors('gradeYear')}" th:errors="*{gradeYear}"></div>
                 </div>
                 <button type="submit" class="btn btn-primary">Add</button>
+                <a th:if="${submit == 'Update'}" th:href="@{/cert_prog}" class="btn btn-primary">Cancel</a>
             </form>
         </div>
     </fieldset>
     <div class="style16"></div>
+    <table th:if="${schools.size() eq 1}" class="table table-striped inlines new-items">
+        <thead>
+        <tr>
+            <th>Program of Choice</th>
+            <th>Choice of School</th>
+            <th>Edit</th>
+        </tr>
+        </thead>
+        <tbody th:each="school : ${schools}">
+        <tr>
+            <td><label th:for="|checked_${school.id}|" th:text="${school.programChoice}"></label></td>
+            <td><label th:for="|checked_${school.id}|" th:text="${school.schoolChoice}"></label></td>
+            <td><a th:href="@{|/cert_prog/${school.id}/editschool|}" class="waves-effect waves-light btn">Edit</a></td>
+        </tr>
+        </tbody>
+    </table>
     <fieldset>
-        <legend> Selection of Health Training Institution</legend>
+        <legend th:text="${schoolheading}"> Selection of Health Training Institution</legend>
         <div>
-            <form class="inline new-item" method="post" th:object="${newSchool}" th:action="@{/school}">
+            <div th:replace="common/layout :: flash"></div>
+            <form class="inline new-item" method="post" th:object="${newSchool}" th:action="@{${action3}}">
+                <input type="hidden" th:field="*{id}"/>
                 <div class="form-group">
                     <select id="certificate" class="form-control input-lg">
                         <option value="">Type of Program</option>
@@ -182,7 +273,7 @@
                     </select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" th:classappend="${#fields.hasErrors('programChoice')}? 'error' : ''">
                     <select th:field="*{programChoice}" id="program" class="form-control input-lg">
                         <option value="">Choice of Program</option>
                         <option class="Auxilary" value="Community-Health-Nursing">Community Health Nursing</option>
@@ -241,8 +332,10 @@
                         </option>
                         <option class="Diploma" value="Health-Informatics">Health Informatics</option>
                     </select>
+                    <div class="error-message" th:if="${#fields.hasErrors('programChoice')}"
+                         th:errors="*{programChoice}"></div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" th:classappend="${#fields.hasErrors('schoolChoice')}? 'error' : ''">
                     <select th:field="*{schoolChoice}" id="school" class="form-control input-lg">
                         <option value="">Choice of School</option>
                         <option class="Community-Health-Nursing" value="CHNTS-AKIM-ODA">CHNTS AKIM ODA</option>
@@ -454,15 +547,26 @@
                             SCIENCE - YENDI
                         </option>
                     </select>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <div class="error-message" th:if="${#fields.hasErrors('schoolChoice')}"
+                         th:errors="*{schoolChoice}"></div>
                 </div>
+                <button type="submit" class="btn btn-primary" th:text="${submit}">Add</button>
+                <a th:if="${submit == 'Update'}" th:href="@{/cert_prog}" class="btn btn-primary">Cancel</a>
             </form>
         </div>
     </fieldset>
+
+    <!--<a th:if="${certificateProgrammes.size() eq 1 and exams.size ge 5}" th:href="@{/cert_prog/}" class="waves-effect waves-light btn">Next</a>-->
+    <div class="style16"></div>
+    <form th:action="@{/printRedirect}" method="post">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Print Form</button>
+    </form>
+
 </div>
 <div th:replace="common/layout :: scripts"></div>
-<footer th:replace="common/layout :: footer"></footer>
-</body>
+<div th:replace="common/layout :: footer">
+</div>
+</div>
 </html>
 
 

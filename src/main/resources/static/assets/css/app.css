@@ -6,8 +6,9 @@
 h3:nth-of-type(2){ font-weight: Bold;}
 
 .announcements{
-    border: 1px solid #696969;
-    padding: 5px;
+    border: 1px solid #d3d3d3;
+    color: rgb(105,105,105)
+    padding: auto 0px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -15,9 +16,9 @@ h3:nth-of-type(2){ font-weight: Bold;}
 }
 
 .announcements p{
-    border-bottom-style: solid;
-    border-bottom-color: #d3d3d3;
-    border-bottom-width: thin;
+    border-color:rgb(105,105,105)
+    color: rgb(105,105,105)
+    border: thin;
 }
 
 .inline {
@@ -26,6 +27,7 @@ h3:nth-of-type(2){ font-weight: Bold;}
 
 nav {
     background: #5fcf80;
+    margin-bottom: 30px;
 }
 
 nav .nav-wrapper .brand-logo {
@@ -33,6 +35,11 @@ nav .nav-wrapper .brand-logo {
     -webkit-transform: none;
     transform: none;
     font-weight: 300;
+}
+
+nav img{
+    width:76px;
+    height:50px;
 }
 
 ul li {
@@ -51,6 +58,22 @@ ul li {
     display:none;
 }
 
+.second_overlay {
+    position: absolute;
+    float: center;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 180%;
+        /*background-color: #000;
+        filter:alpha(opacity=80);
+        -moz-opacity:0.5;
+        -khtml-opacity: 0.5;
+        opacity: 0.5;*/
+        z-index: 998;
+    display:none;
+}
+
 /** Overlay Close Button **/
 
 [class*='close-'] {
@@ -62,12 +85,12 @@ ul li {
   text-decoration: none;
   top: 25px;
   right: 25px;
+  z-index: 998;
   display: none;
 }
 
 .close-classic:after {
   content: 'X'; /* ANSI X letter */
-
 }
 
 /** form **/
@@ -276,7 +299,9 @@ height:100%;
 
 /** FieldSet and Legend **/
 fieldset { border:1px solid #5fcf80;
- }
+margin:0 auto;
+width: 80;
+  }
 
 legend {
   padding: 0.2em 0.5em;
@@ -421,6 +446,106 @@ label.button,label.button:before,label.button:after{
 /** Footer **/
 
 .footer {
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin: 25px 10px;
 }
+
+/** Miscellaneous **/
+
+new-font{
+  position: relative;
+      font-size: 2rem;
+      line-height: 3rem;
+      height: 3rem;
+      padding-left: 46px;
+      font-weight: 200;
+      color: #555;
+}
+
+.inform {
+margin: 5px 5px;
+}
+
+table.table.table-striped.new-font {
+    font-size: large;
+    font-family: inherit;
+}
+
+.blur{
+    -webkit-filter: blur(7px);
+    -moz-filter: blur(15px);
+    -o-filter: blur(15px);
+    -ms-filter: blur(15px);
+    filter: blur(15px);
+}
+
+.editCert{
+margin-top: 15%;
+}
+
+
+.loader
+    {
+        position: fixed;
+           height: 100%;
+            width: 100%;
+       margin-left: 45%;
+                 top: 0;
+                left: 0;
+           z-index: 999;
+           display:none;
+    }
+.loader img
+    {
+        height: 128px;
+        width: 128px;
+    }
+
+.tbl{border:12px solid #DFDFDF;  }
+
+/*Overrate css in BootStrap Nav*/
+
+.nav>li>a {
+    color: #000;
+    }
+
+
+.navbar-default {
+    height: 85px;
+}
+
+.select.input-lg {
+    width: 400px;
+}
+
+select.selectsize {
+    width: 400px;
+ }
+
+ /* This is just for the form upload. Solution to IE8*/
+ .btn-file {
+     position: relative;
+     overflow: hidden;
+     font-size: 14px;
+     color: white;
+ }
+ .btn-file input[type=file] {
+     position: absolute;
+     top: 0;
+     right: 0;
+     min-width: 100%;
+     min-height: 100%;
+     font-size: 14px;
+     color:white;
+     text-align: right;
+     filter: alpha(opacity=0);
+     opacity: 0;
+     outline: none;
+     background: white;
+     cursor: inherit;
+     display: block;
+ }
+
+ .btn-file:hover{
+     font-size: 14px;
+     color: white;
+ }

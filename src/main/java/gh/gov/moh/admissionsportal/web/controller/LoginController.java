@@ -15,12 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class LoginController {
-
-
     @RequestMapping(path = "/login", method = RequestMethod.GET)
     public String loginForm(Model model, HttpServletRequest request) {
         model.addAttribute("user", new User());
         model.addAttribute("programs", Program.values());
+        String referrer = request.getHeader("Referer");
+        request.getSession().setAttribute("url_prior_login", referrer);
         try {
             Object flash = request.getSession().getAttribute("flash");
             model.addAttribute("flash", flash);
@@ -29,19 +29,8 @@ public class LoginController {
         } catch (Exception ex) {
             // "flash" session attribute must not exist...do nothing and proceed normally
         }
-       return "login";
+        return "login";
     }
-
-   /* @RequestMapping(value="/cert_prog", method = RequestMethod.POST)
-    public String loginRedirect(@RequestParam("cert") String name ){
-        ModelAndView model = new ModelAndView("cert_prog");
-       // model.addObject("msg","The link is " );
-        if(name == "Certificate-program"){
-            return "redirect:/cert_prog";
-        }else{
-            return "redirect:/yo";
-        }
-    }*/
 
     @RequestMapping("/access_denied")
     public String accessDenied() {

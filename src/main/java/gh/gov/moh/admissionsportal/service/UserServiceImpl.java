@@ -18,14 +18,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {
-        return userDao.findByUsername(username) ;
+        return userDao.findByUsername(username);
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //Load the user from the database(Throw a not found Exception)
         User user = userDao.findByUsername(username);
-        if(user == null){
+        if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
         //Return the user Object

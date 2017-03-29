@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head th:fragment="head" lang="en">
     <meta charset="UTF-8"/>
     <meta description="viewport" content="width=device-width, initial-scale=1"/>
-    <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet"/>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css"/>
-    <link rel="stylesheet" th:href="@{/assets/css/app.css}" />
+    <link rel="stylesheet"
+          th:href="@{https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css}"/>
+    <link rel="stylesheet"
+          th:href="@{https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/app.css}"/>
     <title th:text="'giflib | ' + ${page_title}">giflib</title>
 </head>
 <body>
 <nav th:fragment="nav">
     <div class="container">
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo">TodoToday</a>
+            <img th:src="@{/assets/images/logo.png}"/><a href="#" class="brand-logo">Health Training Institutions</a>
             <ul class="right">
                 <li sec:authentication="name"></li>
                 <li>
@@ -33,14 +35,16 @@
     </div>
 </div>
 <div th:fragment="scripts">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
     <script type="text/javascript" th:src="@{/assets/js/app.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/imageloader.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/uploader.js}"></script>
 </div>
-<div class="footer" th:fragement="footer">
-
-</div>
+<div class="footer" th:fragement="footer"></div>
 </body>
 </html>

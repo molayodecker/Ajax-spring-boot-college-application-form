@@ -1,6 +1,8 @@
 package gh.gov.moh.admissionsportal.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Created by molayodecker on 07/02/2017.
@@ -12,8 +14,12 @@ public class School {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Please select a program choice.")
+    @Size(min = 2, max = 25)
     private String programChoice;
 
+    @NotNull(message = "Please select a school choice.")
+    @Size(min = 2, max = 25)
     private String schoolChoice;
 
     @OneToOne
